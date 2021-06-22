@@ -6,27 +6,35 @@ const postBank = require('./postBank');
 
 
 const app = express();
+app.use(express.static('public'));
 
 // app.get("/", (req, res) => res.send("Hello World!"));
 
 app.get('/', (req, res) =>{
  const posts = postBank.list();
  const webpage = `<!DOCTYPE html>
- <html lang="en">
+ <html>
  <head>
-     <meta charset="UTF-8">
-     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Document</title>
+   <title>Wizard News</title>
+   <link rel="stylesheet" href="/style.css" />
  </head>
  <body>
-     <div>
-       <ul>
-          ${posts.map(post => `<li>${post.title} ${post.name}</li>`).join(' ')}
-       </ul>
-     </div>
+   <div class="news-list">
+     <header><img src="/logo.png"/>Wizard News</header>
+     ${posts.map(post => `
+       <div class='news-item'>
+         <p>
+           <span class="news-position">${post.id}. ▲</span>${post.title}
+           <small>(by ${post.name})</small>
+         </p>
+         <small class="news-info">
+           ${post.upvotes} upvotes | ${post.date}
+         </small>
+       </div>`
+     ).join('')}
+   </div>
  </body>
- </html>`;
+</html>`
 
  res.send(webpage);
 });
