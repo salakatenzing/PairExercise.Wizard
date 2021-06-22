@@ -22,12 +22,14 @@ app.get('/', (req, res) =>{
  <body>
      <div>
        <ul>
-          ${posts.map(post => ``)}
+          ${posts.map(post => `<li>${post.title} ${post.name}</li>`).join(' ')}
        </ul>
      </div>
  </body>
- </html>`
-})
+ </html>`;
+
+ res.send(webpage);
+});
 
 
 // ${posts.map(post => `<li>${"posts.title", 'posts.name'}</li>`)}
